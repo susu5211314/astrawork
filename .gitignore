@@ -1,0 +1,35 @@
+# Local agent and planning state
+.mimosa/
+.superpowers/
+.zcode/
+
+# Browser automation artifacts
+.playwright-mcp/
+playwright-report/
+test-results/
+
+# Local screenshots and temporary artifacts
+/astrawork-*.png
+*.log
+*.tmp
+
+# Application dependencies and build output
+node_modules/
+dist/
+build/
+target/
+src-tauri/target/
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini

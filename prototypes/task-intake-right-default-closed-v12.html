@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AstraWork 右栏默认收起</title>
+<style>
+*{box-sizing:border-box}button{font:inherit}body{margin:0;padding:28px;font-family:Inter,"Microsoft YaHei",system-ui,sans-serif;background:#f6f7f8;color:#242424}.page{max-width:1240px;margin:auto}h2{margin:0 0 6px;font-size:22px}.subtitle{margin:0 0 18px;color:#727272;font-size:13px}.window{--left:230px;--right:302px;min-width:1100px;height:720px;border:1px solid #cfcfce;border-radius:14px;overflow:hidden;background:#e8e8e7;box-shadow:0 25px 75px rgba(0,0,0,.14)}
+.titlebar{height:38px;display:grid;grid-template-columns:var(--left) 1fr auto;align-items:center;transition:grid-template-columns .22s ease}.brand{height:100%;padding:0 0 0 15px;border:0;background:transparent;display:flex;align-items:center;gap:8px;font-size:11px;font-weight:650;cursor:pointer;overflow:hidden;color:inherit}.brand:hover{background:rgba(255,255,255,.38)}.brand-icon{width:20px;height:20px;border-radius:6px;background:#262626;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;flex:none}.brand-name{white-space:nowrap}.drag{height:100%;display:flex;align-items:center;justify-content:center;color:#888;font-size:9px}.win{height:100%;display:flex}.window-control{width:46px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;color:#555;font-size:12px}.window-control:hover{background:rgba(0,0,0,.07)}.window-control.close:hover{background:#e81123;color:#fff}
+.app{height:calc(100% - 38px);display:grid;grid-template-columns:var(--left) minmax(530px,1fr) var(--right);gap:10px;padding:0 10px 10px 0;transition:grid-template-columns .22s ease}.left{padding:7px 10px 8px 14px;display:flex;flex-direction:column;overflow:hidden;opacity:1;transform:translateX(0);transition:opacity .15s,transform .22s}.primary,.project,.thread{width:100%;border:0;background:transparent;text-align:left;color:inherit;cursor:pointer}.primary{height:32px;border-radius:8px;display:flex;align-items:center;gap:10px;padding:0 9px;color:#363636;font-size:12px;white-space:nowrap}.primary.active{background:rgba(255,255,255,.68);font-weight:600}.icon{width:16px;text-align:center;flex:none}.section{display:flex;margin:17px 7px 7px;color:#8a8a8a;font-size:10px;white-space:nowrap}.section span:last-child{margin-left:auto}.project{padding:7px 8px;border-radius:8px;font-size:11px;background:rgba(255,255,255,.62);white-space:nowrap}.thread{height:27px;display:flex;align-items:center;padding:0 8px;color:#555;font-size:10px;white-space:nowrap}.thread em{margin-left:auto;color:#999;font-size:8px;font-style:normal}.foot{margin-top:auto;display:flex;justify-content:space-between;padding:7px;color:#777;font-size:11px}
+.main,.right{background:#fff;border-radius:16px;overflow:hidden}.main{display:flex;flex-direction:column;min-width:0}.head{height:48px;display:flex;align-items:center;padding:0 13px 0 17px;border-bottom:1px solid #f0f0f0}.title{font-size:12px;font-weight:650}.meta{font-size:9px;color:#999;margin-top:2px}.head-tools{margin-left:auto;display:flex;gap:7px}.head-button{width:28px;height:28px;border:0;background:transparent;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#777;font-size:11px;cursor:pointer}.head-button:hover,.head-button.active{background:#f0f0ef;color:#333}.panel-button{position:relative}.panel-button:after{content:"";position:absolute;right:4px;top:4px;width:4px;height:4px;border-radius:50%;background:#777}.messages{flex:1;padding:21px 34px 8px}.user{margin:0 0 16px auto;max-width:72%;padding:9px 12px;border-radius:13px 13px 4px 13px;background:#f0f0ef;font-size:12px}.agent{display:grid;grid-template-columns:26px 1fr;gap:9px;font-size:12px;line-height:1.55;color:#3b3b3b}.avatar{width:26px;height:26px;border-radius:50%;background:#ececeb;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}.choices{display:grid;gap:6px;max-width:470px;margin:12px 0 0 35px}.choice{border:1px solid #e7e7e7;background:#fff;border-radius:11px;padding:9px 11px;font-size:11px;text-align:left;color:inherit}.choice.on{background:#f8f8f7;border-color:#bdbdbd}.choice small{display:block;color:#888;margin-top:3px}.ready{margin:0 24px 8px;height:30px;border:1px solid #ececec;border-radius:9px;display:flex;align-items:center;padding:0 10px;gap:8px;color:#777;font-size:9px}.steps{display:flex;gap:3px;width:90px}.step{height:3px;flex:1;border-radius:9px;background:#e5e5e5}.step.on{background:#777}.ready .summary-button{margin-left:auto;border:0;background:transparent;color:#777;cursor:pointer}
+.composer{margin:0 24px 18px;border:1px solid #e3e3e3;border-radius:17px;box-shadow:0 4px 14px rgba(0,0,0,.055);overflow:hidden}.drop{height:19px;display:flex;align-items:center;justify-content:center;background:#fafafa;border-bottom:1px dashed #ececec;color:#aaa;font-size:8px}.files{display:flex;gap:5px;padding:8px 10px 0}.file{height:24px;border:0;display:flex;align-items:center;gap:4px;padding:0 7px;background:#f4f4f3;border-radius:7px;color:#606060;font-size:9px;cursor:pointer}.file:hover{background:#e9e9e7}.file i{font-size:7px;color:#758477}.prompt{min-height:50px;padding:10px 12px 6px;color:#a1a1a1;font-size:12px}.mention{color:#555;font-weight:600}.tools{display:flex;align-items:center;gap:4px;padding:5px 8px}.tool{height:27px;border:0;border-radius:7px;display:flex;align-items:center;gap:5px;padding:0 7px;color:#5f5f5f;font-size:9px;background:#fafafa;white-space:nowrap}.tool.model{background:#f1f1f0;color:#333}.tool.icon-tool{width:27px;padding:0;justify-content:center;font-size:12px}.send{margin-left:auto;width:29px;height:29px;border:0;border-radius:50%;background:#dededc;color:#fff;display:flex;align-items:center;justify-content:center}.runtime{border-top:1px solid #f0f0f0;background:#fbfbfa;min-height:32px;display:flex;align-items:center;gap:5px;padding:0 8px}.pill{height:22px;display:flex;align-items:center;gap:5px;padding:0 7px;color:#686868;font-size:8px;white-space:nowrap}.dot{width:5px;height:5px;border-radius:50%;background:#777}.dot.safe{background:#70a181}.dot.cost{background:#c99858}.runtime .scope{margin-left:auto;color:#aaa;font-size:8px;white-space:nowrap}.expand{border:0;padding:6px;border-radius:6px;background:#f0f0ef;font-size:8px;color:#666;white-space:nowrap}
+.right{display:flex;flex-direction:column;min-width:0;opacity:1;transform:translateX(0);transition:opacity .15s,transform .22s}.tabs{height:48px;display:flex;align-items:end;padding:0 12px;gap:12px;border-bottom:1px solid #f0f0f0}.tab{height:31px;border:0;background:transparent;display:flex;align-items:center;color:#999;font-size:9px;white-space:nowrap;cursor:pointer}.tab.on{color:#333;border-bottom:2px solid #555}.right-body{padding:13px;overflow:auto}.panel-error{margin-bottom:9px;border:1px solid #d9b86c;border-radius:9px;padding:8px;background:#fff9e7;color:#765f27;font-size:9px}.panel-error[hidden],.tabpanel[hidden]{display:none}.card{border:1px solid #ececec;border-radius:11px;padding:10px;margin-bottom:9px;outline:none;transition:background .18s,border-color .18s,box-shadow .18s}.card h4{font-size:10px;margin:0 0 7px}.row{min-height:25px;border-top:1px solid #f1f1f1;display:flex;align-items:center;justify-content:space-between;color:#777;font-size:9px}.ok{color:#718b76}.privacy{background:#fafcf9}.privacy p,.empty{font-size:8px;line-height:1.45;color:#8a8a8a}.card.targeted{background:#fffbe9;border-color:#d3b867;box-shadow:0 0 0 2px rgba(211,184,103,.22)}
+.window.left-closed{--left:0px}.window.left-closed .left{opacity:0;transform:translateX(-28px);pointer-events:none}.window.left-closed .brand{padding:0;width:0;opacity:0;pointer-events:none}.window.right-closed{--right:0px}.window.right-closed .right{opacity:0;transform:translateX(28px);pointer-events:none}.window.right-closed .panel-button:after{background:#bbb}.left-reopen{position:absolute;left:9px;top:47px;width:27px;height:27px;border:0;border-radius:8px;background:#fff;box-shadow:0 2px 9px rgba(0,0,0,.09);display:none;align-items:center;justify-content:center;font-size:10px;cursor:pointer;z-index:3}.window.left-closed .left-reopen{display:flex}.window-shell{position:relative}.notes{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.note{border:1px solid #ddd;border-radius:10px;padding:11px;background:#fff;font-size:11px;color:#777;line-height:1.45}.note strong{display:block;color:#2f2f2f;margin-bottom:3px}button:focus-visible,[tabindex="-1"]:focus-visible{outline:2px solid #566f91;outline-offset:2px}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition-duration:.01ms!important}}@media(max-width:1180px){body{padding-left:0;padding-right:0}.page{max-width:none}.page>h2,.page>.subtitle,.notes{margin-left:20px;margin-right:20px}.notes{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="page">
+<h2>右栏默认收起 V12</h2>
+<p class="subtitle">左栏默认展开，右栏默认收起；点击对话栏右上角按钮或引用对象后，右栏才从右侧展开。</p>
+<div class="window-shell">
+<div class="window right-closed" id="window">
+<button class="left-reopen" id="leftReopen" type="button" aria-label="展开左栏" aria-controls="leftPanel" aria-expanded="false">A</button>
+<div class="titlebar">
+<button class="brand" id="brandButton" type="button" aria-label="收起左栏" aria-controls="leftPanel" aria-expanded="true"><span class="brand-icon">A</span><span class="brand-name">AstraWork</span></button>
+<div class="drag">多 Agent 工作台　/　新项目 · 需求澄清</div>
+<div class="win"><button class="window-control" type="button" aria-label="最小化">—</button><button class="window-control" type="button" aria-label="最大化或还原">□</button><button class="window-control close" type="button" aria-label="关闭">×</button></div>
+</div>
+<div class="app">
+<aside class="left" id="leftPanel" aria-label="主导航">
+<button class="primary active" type="button"><span class="icon">＋</span>新建任务</button>
+<button class="primary" type="button"><span class="icon">◷</span>自动化任务</button>
+<button class="primary" type="button"><span class="icon">♧</span>协作中心</button>
+<button class="primary" type="button"><span class="icon">◇</span>生态市场</button>
+<div class="section"><span>项目</span><span>＋</span></div><button class="project" type="button">▱　多 Agent 工作台</button>
+<div class="section"><span>对话</span><span>＋</span></div><button class="thread" type="button">新项目 · 需求澄清<em>● ●</em></button><button class="thread" type="button">总控 Agent 规划<em>●</em></button><button class="thread" type="button">输入区交互设计<em>● ●</em></button>
+<div class="foot"><span>⚙</span><span>●　＋</span></div>
+</aside>
+<main class="main">
+<header class="head"><div><div class="title">新项目 · 需求澄清</div><div class="meta">总控 Agent · 自动保存 · 需求包 v0.1</div></div><div class="head-tools"><button class="head-button" type="button" aria-label="搜索">⌕</button><button class="head-button" type="button" aria-label="参与 Agent">♙</button><button class="head-button panel-button" id="rightButton" type="button" aria-label="展开右栏" aria-controls="rightPanel" aria-expanded="false">◧</button><button class="head-button" type="button" aria-label="更多操作">•••</button></div></header>
+<section class="messages"><div class="user">我想开发一款 Windows 本地运行的多 Agent 开发工作台。</div><div class="agent"><div class="avatar">总</div><div><b>首版最优先服务哪类用户？</b><br>这会影响本地权限、同步方式和任务协作模型。</div></div><div class="choices"><button class="choice on" type="button"><b>单人本地使用（推荐）</b><small>不引入组织账号和多人编辑冲突。</small></button><button class="choice" type="button"><b>个人多设备</b><small>需要加密同步会话、记忆和任务状态。</small></button></div></section>
+<div class="ready"><b>需求完备度</b><div class="steps" aria-label="已完成 6 项中的 4 项"><i class="step on"></i><i class="step on"></i><i class="step on"></i><i class="step on"></i><i class="step"></i><i class="step"></i></div><span>4 / 6 · 假设 2 · 待决 2</span><button class="summary-button panel-reference" type="button" data-tab-id="tab-requirements" data-object-id="requirement-scope">查看摘要⌃</button></div>
+<div class="composer"><div class="drop">拖放文件或粘贴截图 · 支持资源管理器发送与右侧面板引用</div><div class="files"><button class="file panel-reference" type="button" data-tab-id="tab-context" data-object-id="context-apps-web">⌗ apps/web <i>已索引</i> ×</button><button class="file panel-reference" type="button" data-tab-id="tab-evidence" data-object-id="evidence-requirements-md">▤ requirements.md <i>按需注入</i> ×</button><button class="file panel-reference" type="button" data-tab-id="tab-evidence" data-object-id="evidence-layout-png">▧ layout.png <i>本地解析</i> ×</button></div><div class="prompt">随意输入；使用 <span class="mention">@架构Agent</span> 咨询，<span class="mention">@文件</span> 引用，输入 <span class="mention">/</span> 打开命令…</div><div class="tools"><button class="tool icon-tool" type="button" aria-label="添加内容">＋</button><button class="tool model" type="button">◉ Claude Sonnet⌄</button><button class="tool" type="button">Thinking 16K⌄</button><button class="tool panel-reference" type="button" data-tab-id="tab-context" data-object-id="context-summary">上下文 38%⌄</button><button class="tool icon-tool" type="button" aria-label="添加图片">▧</button><button class="tool icon-tool" type="button" aria-label="添加文件">▤</button><button class="tool icon-tool" type="button" aria-label="引用对象">@</button><button class="tool icon-tool" type="button" aria-label="打开命令">/</button><button class="send" type="button" aria-label="发送">↑</button></div><div class="runtime"><span class="pill"><i class="dot"></i>需求访谈</span><span class="pill"><i class="dot safe"></i>只读</span><span class="pill"><i class="dot"></i>AstraWork / main / 本机</span><span class="pill"><i class="dot cost"></i>预计 ¥0.08 · 8 秒</span><span class="scope">模型仅本次</span><button class="expand" type="button" aria-expanded="false">运行设置⌃</button></div></div>
+</main>
+<aside class="right" id="rightPanel" aria-label="上下文与需求详情" aria-hidden="true" inert>
+<div class="tabs" role="tablist" aria-label="右栏内容">
+<button class="tab on" id="tab-context" type="button" role="tab" aria-selected="true" aria-controls="panel-context" tabindex="0" data-tab="上下文">上下文</button>
+<button class="tab" id="tab-requirements" type="button" role="tab" aria-selected="false" aria-controls="panel-requirements" tabindex="-1" data-tab="需求包">需求包</button>
+<button class="tab" id="tab-evidence" type="button" role="tab" aria-selected="false" aria-controls="panel-evidence" tabindex="-1" data-tab="证据">证据</button>
+<button class="tab" id="tab-history" type="button" role="tab" aria-selected="false" aria-controls="panel-history" tabindex="-1" data-tab="历史">历史</button>
+</div>
+<div class="right-body">
+<div class="panel-error" id="panelError" role="alert" tabindex="-1" hidden></div>
+<section class="tabpanel" id="panel-context" role="tabpanel" aria-labelledby="tab-context">
+<div class="card" id="context-summary" tabindex="-1"><h4>本次上下文 · 38%</h4><div class="row"><span>会话与需求摘要</span><span>1.2K</span></div><div class="row"><span>项目画像</span><span>0.6K</span></div><div class="row"><span>代码与文件片段</span><span>1.1K</span></div></div>
+<div class="card" id="context-apps-web" tabindex="-1"><h4>apps/web</h4><div class="row"><span>类型</span><span>代码目录</span></div><div class="row"><span>状态</span><span class="ok">已索引</span></div><div class="row"><span>注入策略</span><span>按符号选择</span></div></div>
+<div class="card"><h4>运行边界</h4><div class="row"><span>模式</span><span>需求访谈</span></div><div class="row"><span>权限</span><span class="ok">只读</span></div><div class="row"><span>目标</span><span>AstraWork / main</span></div></div>
+<div class="card privacy"><h4>隐私出站预览</h4><div class="row"><span>敏感信息扫描</span><span class="ok">未发现</span></div><div class="row"><span>将发送给</span><span>Anthropic</span></div><p>原始文件保留本机，仅发送相关片段。</p></div>
+</section>
+<section class="tabpanel" id="panel-requirements" role="tabpanel" aria-labelledby="tab-requirements" hidden>
+<div class="card" id="requirement-scope" tabindex="-1"><h4>V1 范围</h4><div class="row"><span>Windows 本地优先</span><span class="ok">已确认</span></div><div class="row"><span>单人使用</span><span class="ok">已确认</span></div><div class="row"><span>多 Agent 开发全流程</span><span class="ok">已确认</span></div></div>
+<div class="card" tabindex="-1"><h4>待决项</h4><p class="empty">仍有 2 项约束需要澄清，暂不可生成需求包。</p></div>
+</section>
+<section class="tabpanel" id="panel-evidence" role="tabpanel" aria-labelledby="tab-evidence" hidden>
+<div class="card" id="evidence-requirements-md" tabindex="-1"><h4>requirements.md</h4><div class="row"><span>类型</span><span>Markdown 文档</span></div><div class="row"><span>状态</span><span class="ok">本地解析完成</span></div><div class="row"><span>出站</span><span>仅相关片段</span></div></div>
+<div class="card" id="evidence-layout-png" tabindex="-1"><h4>layout.png</h4><div class="row"><span>类型</span><span>界面截图</span></div><div class="row"><span>状态</span><span class="ok">视觉解析完成</span></div><div class="row"><span>来源</span><span>用户附件</span></div></div>
+</section>
+<section class="tabpanel" id="panel-history" role="tabpanel" aria-labelledby="tab-history" hidden>
+<div class="card" tabindex="-1"><h4>访谈历史</h4><div class="row"><span>当前分支</span><span>main</span></div><div class="row"><span>Ledger Revision</span><span>18</span></div></div>
+</section>
+</div>
+</aside>
+</div>
+</div>
+</div>
+<div class="notes"><div class="note"><strong>默认状态</strong>左栏默认展开，右栏默认收起，让中间对话区获得主要工作空间。</div><div class="note"><strong>对象级定位</strong>文件、证据与需求摘要会打开对应页签，聚焦并短暂高亮唯一目标；重复点击不会创建重复面板。</div><div class="note"><strong>键盘与读屏</strong>控制器使用原生按钮与 ARIA 状态；页签支持方向键、Home、End，Escape 关闭后焦点返回原引用。</div></div>
+</div>
+<script>
+const windowElement=document.getElementById('window');
+const leftPanel=document.getElementById('leftPanel');
+const brandButton=document.getElementById('brandButton');
+const leftReopen=document.getElementById('leftReopen');
+const rightPanel=document.getElementById('rightPanel');
+const rightButton=document.getElementById('rightButton');
+const panelError=document.getElementById('panelError');
+const tabs=Array.from(rightPanel.querySelectorAll('[role="tab"]'));
+const panelReferences=Array.from(document.querySelectorAll('.panel-reference'));
+let highlightedTarget=null;
+let highlightTimer=null;
+let rightReturnFocus=rightButton;
+
+function setLeftOpen(open){
+  windowElement.classList.toggle('left-closed',!open);
+  leftPanel.inert=!open;
+  brandButton.setAttribute('aria-expanded',String(open));
+  brandButton.setAttribute('aria-label',open?'收起左栏':'展开左栏');
+  leftReopen.setAttribute('aria-expanded',String(open));
+  if(!open) leftReopen.focus();
+}
+
+function isUsableFocusTarget(target){
+  if(!(target instanceof HTMLElement)||!target.isConnected||target.matches(':disabled,[hidden]')) return false;
+  if(target.closest('[inert],[hidden],[aria-hidden="true"]')) return false;
+  const style=getComputedStyle(target);
+  return style.display!=='none'&&style.visibility!=='hidden'&&target.getClientRects().length>0;
+}
+
+function restoreRightFocus(){
+  const preferred=isUsableFocusTarget(rightReturnFocus)?rightReturnFocus:rightButton;
+  preferred.focus();
+  if(document.activeElement!==preferred) rightButton.focus();
+}
+
+function setRightOpen(open,moveFocus){
+  windowElement.classList.toggle('right-closed',!open);
+  rightPanel.inert=!open;
+  rightPanel.setAttribute('aria-hidden',String(!open));
+  rightButton.classList.toggle('active',open);
+  rightButton.setAttribute('aria-expanded',String(open));
+  rightButton.setAttribute('aria-label',open?'收起右栏':'展开右栏');
+  if(!open){
+    if(highlightedTarget) highlightedTarget.classList.remove('targeted');
+    clearTimeout(highlightTimer);
+    highlightedTarget=null;
+  }
+  if(moveFocus){
+    if(open) rightPanel.querySelector('[role="tab"][aria-selected="true"]').focus();
+    else restoreRightFocus();
+  }
+}
+
+function activateTab(tabId,focusTab){
+  const selected=document.getElementById(tabId);
+  if(!selected||!tabs.includes(selected)) return null;
+  tabs.forEach(tab=>{
+    const active=tab===selected;
+    tab.classList.toggle('on',active);
+    tab.setAttribute('aria-selected',String(active));
+    tab.tabIndex=active?0:-1;
+    document.getElementById(tab.getAttribute('aria-controls')).hidden=!active;
+  });
+  panelError.hidden=true;
+  if(focusTab) selected.focus();
+  return selected;
+}
+
+function showPanelError(message){
+  panelError.textContent=message;
+  panelError.hidden=false;
+  panelError.focus();
+}
+
+function focusTarget(objectId){
+  const target=document.getElementById(objectId);
+  if(!target||!rightPanel.contains(target)){
+    showPanelError('无法定位引用对象，请刷新来源后重试。');
+    return false;
+  }
+  if(highlightedTarget) highlightedTarget.classList.remove('targeted');
+  clearTimeout(highlightTimer);
+  highlightedTarget=target;
+  target.scrollIntoView({block:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  target.focus({preventScroll:true});
+  target.classList.add('targeted');
+  highlightTimer=setTimeout(()=>{
+    target.classList.remove('targeted');
+    if(highlightedTarget===target) highlightedTarget=null;
+  },1600);
+  return true;
+}
+
+function openRight(tabId,objectId,trigger){
+  rightReturnFocus=trigger||rightButton;
+  setRightOpen(true,false);
+  if(!activateTab(tabId,false)){
+    showPanelError('无法打开引用页签，请刷新界面后重试。');
+    return false;
+  }
+  requestAnimationFrame(()=>objectId?focusTarget(objectId):document.getElementById(tabId).focus());
+  return true;
+}
+
+brandButton.addEventListener('click',()=>setLeftOpen(false));
+leftReopen.addEventListener('click',()=>{setLeftOpen(true);brandButton.focus()});
+rightButton.addEventListener('click',()=>{
+  const open=windowElement.classList.contains('right-closed');
+  if(open) rightReturnFocus=rightButton;
+  setRightOpen(open,true);
+});
+panelReferences.forEach(reference=>reference.addEventListener('click',event=>openRight(reference.dataset.tabId,reference.dataset.objectId,event.currentTarget)));
+tabs.forEach(tab=>{
+  tab.addEventListener('click',()=>activateTab(tab.id,true));
+  tab.addEventListener('keydown',event=>{
+    const current=tabs.indexOf(tab);
+    let next=null;
+    if(event.key==='ArrowRight') next=(current+1)%tabs.length;
+    if(event.key==='ArrowLeft') next=(current-1+tabs.length)%tabs.length;
+    if(event.key==='Home') next=0;
+    if(event.key==='End') next=tabs.length-1;
+    if(next!==null){event.preventDefault();activateTab(tabs[next].id,true)}
+  });
+});
+rightPanel.addEventListener('keydown',event=>{if(event.key==='Escape'){event.preventDefault();setRightOpen(false,true)}});
+</script>
+</body>
+</html>
